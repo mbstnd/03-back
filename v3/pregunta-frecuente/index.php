@@ -94,7 +94,14 @@ if ($_version == 'v3') {
                                 include_once '../conexion.php';
                                 $control = new Controlador();
                                 $body = json_decode(file_get_contents("php://input", true));
-                                $respuesta = $control->putNombreById($body->nombre, $body->id);
+                                // var_dump($body);
+                                if(strlen($body->pregunta) >0){
+                                    $respuesta = $control->putPreguntaById($body->pregunta, $body->id);
+
+                                }
+                                if (strlen($body->respuesta) >0){
+                                    $respuesta = $control->putRespuestaById($body->respuesta, $body->id);
+                                }
                                 http_response_code(200);
                                 echo json_encode(["data" => $respuesta]);
                             }else {

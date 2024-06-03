@@ -28,27 +28,6 @@ class Controlador{
         // var_dump($_nuevoObjeto->nombre);
         $id = count($this->getAll()) +1;
         $sql = "INSERT INTO pregunta_frecuente (id, pregunta, respuesta, activo) VALUES ($id,'$_nuevoObjeto->pregunta','$_nuevoObjeto->respuesta',true)";
-        echo $sql;
-        // ejecucion SQL
-        // $rs = [];
-        // try {
-        //     $rs = mysqli_query($con->getConnection(), $sql);
-        // } catch (\Throwable $th) {
-        //     $rs = null;
-        // }
-        // // var_dump($rs);
-        // // cierre de Conexion
-        // $con->closeConnection();
-        // // result set = resultado de la ejecucion de la query
-        // if($rs){
-        //     return true;
-        // }
-        return null;
-    }
-
-    public function patchEncenderApagar($_id,$_accion){
-        $con = new Conexion();
-        $sql = "UPDATE mantenedor SET activo = $_accion WHERE id = $_id";
         // echo $sql;
         // ejecucion SQL
         $rs = [];
@@ -67,9 +46,52 @@ class Controlador{
         return null;
     }
 
-    public function putNombreById($_nombre,$_id){
+    public function patchEncenderApagar($_id,$_accion){
         $con = new Conexion();
-        $sql = "UPDATE mantenedor SET nombre =  '$_nombre' WHERE id = $_id";
+        $sql = "UPDATE pregunta_frecuente SET activo = $_accion WHERE id = $_id";
+        // echo $sql;
+        // ejecucion SQL
+        $rs = [];
+        try {
+            $rs = mysqli_query($con->getConnection(), $sql);
+        } catch (\Throwable $th) {
+            $rs = null;
+        }
+        // var_dump($rs);
+        // cierre de Conexion
+        $con->closeConnection();
+        // result set = resultado de la ejecucion de la query
+        if($rs){
+            return true;
+        }
+        return null;
+    }
+
+    public function putPreguntaById($_nuevo,$_id){
+        $con = new Conexion();
+        $sql = "UPDATE pregunta_frecuente SET pregunta =  '$_nuevo' WHERE id = $_id";
+        // echo $sql;
+        // ejecucion SQL
+        
+        $rs = [];
+        try {
+            $rs = mysqli_query($con->getConnection(), $sql);
+        } catch (\Throwable $th) {
+            $rs = null;
+        }
+        // var_dump($rs);
+        // cierre de Conexion
+        $con->closeConnection();
+        // result set = resultado de la ejecucion de la query
+        if($rs){
+            return true;
+        }
+        return null;
+    }
+
+    public function putRespuestaById($_nuevo,$_id){
+        $con = new Conexion();
+        $sql = "UPDATE pregunta_frecuente SET respuesta =  '$_nuevo' WHERE id = $_id";
         // echo $sql;
         // ejecucion SQL
         
@@ -91,7 +113,7 @@ class Controlador{
 
     public function deleteById($_id){
         $con = new Conexion();
-        $sql = "DELETE FROM mantenedor WHERE id =$_id";
+        $sql = "DELETE FROM pregunta_frecuente WHERE id =$_id";
         // echo $sql;
         // ejecucion SQL
         
