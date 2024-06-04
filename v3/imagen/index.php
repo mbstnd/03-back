@@ -42,16 +42,16 @@ if ($_version == 'v3') {
                     include_once '../conexion.php';
                     $control = new Controlador();
                     $body = json_decode(file_get_contents("php://input", true));
-                    var_dump($body);
-                    // $respuesta = $control->postNuevo($body);
-                    // if($respuesta){
-                    //     http_response_code(201);
-                    //     echo json_encode(["data" => $respuesta]);
-                    // }else{
-                    //     http_response_code(409);
-                    //     echo json_encode(["data" => "Error: El nombre ingresado ya existe. Por favor, elija un nombre diferente."]);
+                    // var_dump($body);
+                    $respuesta = $control->postNuevo($body);
+                    if($respuesta){
+                        http_response_code(201);
+                        echo json_encode(["data" => $respuesta]);
+                    }else{
+                        http_response_code(409);
+                        echo json_encode(["data" => "Error: El nombre ingresado ya existe. Por favor, elija un nombre diferente."]);
 
-                    // }
+                    }
                     }else{
                         http_response_code(401);
                         echo json_encode(["Error" => "No tiene autorizacion POST"]);
@@ -95,12 +95,12 @@ if ($_version == 'v3') {
                                 $control = new Controlador();
                                 $body = json_decode(file_get_contents("php://input", true));
                                 // var_dump($body);
-                                if(strlen($body->pregunta) >0){
-                                    $respuesta = $control->putPreguntaById($body->pregunta, $body->id);
+                                if(strlen($body->nombre) >0){
+                                    $respuesta = $control->putNombreById($body->nombre, $body->id);
 
                                 }
-                                if (strlen($body->respuesta) >0){
-                                    $respuesta = $control->putRespuestaById($body->respuesta, $body->id);
+                                if (strlen($body->imagen) >0){
+                                    $respuesta = $control->putImagenById($body->imagen, $body->id);
                                 }
                                 http_response_code(200);
                                 echo json_encode(["data" => $respuesta]);
