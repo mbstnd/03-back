@@ -1,9 +1,9 @@
-CREATE DATABASE ciisa_backend_v1_eva2_A;
-CREATE USER 'ciisa_backend_v1_eva2_A'@'localhost' IDENTIFIED BY 'l4cl4v3-c11s4';
-GRANT ALL PRIVILEGES ON ciisa_backend_v1_eva2_A . * TO 'ciisa_backend_v1_eva2_A'@'localhost';
+CREATE DATABASE ciisa_backend_v3_eva2_A;
+CREATE USER 'ciisa_backend_v3_eva2_A'@'localhost' IDENTIFIED BY 'l4cl4v3-c11s4';
+GRANT ALL PRIVILEGES ON ciisa_backend_v3_eva2_A . * TO 'ciisa_backend_v3_eva2_A'@'localhost';
 FLUSH PRIVILEGES;
 
-USE ciisa_backend_v1_eva2_A;
+USE ciisa_backend_v3_eva2_A;
 
 CREATE TABLE mantenimiento_info (
     id INT PRIMARY KEY,
@@ -132,6 +132,27 @@ INSERT INTO pregunta_frecuente (id, pregunta, respuesta, activo) VALUES
 (2, '¿Necesitas visita técnica?', 'Puedes solicitar visita técnica para evaluación mediante correo electrónico Contacto@energyandwater.cl o al +56232569798.',true),
 (3, '¿Qué tipo de aire acondicionado pueden revisar?', 'Revisamos, reparamos e instalamos equipos domiciliarios e industriales.',true);
 
+CREATE TABLE parcela (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(20) NOT NULL,
+    parcela_lote_id INT NOT NULL,
+    parcela_tipo_id INT NOT NULL,
+    numeracion_interna VARCHAR(10),
+    terreno_ancho INT,
+    terreno_largo INT,
+    terreno_despejado_arboles BOOLEAN DEFAULT FALSE,
+    ubicacion_latitud_gm DOUBLE NOT NULL,
+    ubicacion_longitud_gm DOUBLE NOT NULL,
+    pie INT NOT NULL,
+    valor INT NOT NULL,
+    activo BOOLEAN NOT NULL DEFAULT FALSE,
+    FOREIGN KEY (parcela_lote_id) REFERENCES parcela_lote (id),
+    FOREIGN KEY (parcela_tipo_id) REFERENCES parcela_tipo (id)
+);
+
+INSERT INTO parcela (id, nombre, parcela_lote_id, parcela_tipo_id, numeracion_interna, terreno_ancho, terreno_largo, terreno_despejado_arboles, ubicacion_latitud_gm, ubicacion_longitud_gm, pie, valor, activo) VALUES 
+(1, 'San Nicolás - A1', 1, 1, 'A1', 100, 50, TRUE, -36.502028, -72.231966, 1500000, 15990000, TRUE);
+
 
 // CRUD 
 
@@ -145,6 +166,11 @@ INSERT INTO historia_imagen (id, historia_id, imagen_id) VALUES (0, 0, 0);
 INSERT INTO equipo (id, tipo, texto, activo) VALUES (0, 'TIPO', 'TEXTO', true);
 INSERT INTO equipo_imagen (id, historia_id, imagen_id) VALUES (0, 0, 0);
 INSERT INTO pregunta_frecuente (id, pregunta, respuesta, activo) VALUES (0, 'PREGUNTA', 'RESPUESTA', true);
+INSERT INTO parcela_tipo (id, nombre, activo) VALUES (0, 'TIPO', true);
+INSERT INTO parcela_lote (id, nombre, activo) VALUES (0, 'TIPO', true);
+INSERT INTO parcela_servicio (id, nombre, activo) VALUES (0, 'TIPO', true);
+INSERT INTO parcela (id, nombre, parcela_lote_id, parcela_tipo_id, numeracion_interna, terreno_ancho, terreno_largo, terreno_despejado_arboles, ubicacion_latitud_gm, ubicacion_longitud_gm, activo) VALUES (0, 'Nombre', 0, 0, 'Numeracion', 100, 50, TRUE, -36.502028, -72.231966, 1500000, 15000000,TRUE);
+INSERT INTO parcela_servicio_parcela (id, parcela_id, parcela_servicio_id) VALUES (0, 0, 0);
 
 -- READ
 SELECT id, nombre, texto, activo FROM mantenimiento_info;
@@ -156,6 +182,11 @@ SELECT id, historia_id, imagen_id FROM historia_imagen;
 SELECT id, tipo, texto, activo FROM equipo;
 SELECT id, historia_id, imagen_id FROM equipo_imagen;
 SELECT id, pregunta, respuesta, activo FROM pregunta_frecuente;
+SELECT id, nombre, activo FROM parcela_tipo;
+SELECT id, nombre, activo FROM parcela_lote;
+SELECT id, nombre, activo FROM parcela_servicio;
+SELECT id, nombre, parcela_lote_id, parcela_tipo_id, numeracion_interna, terreno_ancho, terreno_largo, terreno_despejado_arboles, ubicacion_latitud_gm, ubicacion_longitud_gm, activo FROM parcela;
+SELECT id, parcela_id, parcela_servicio_id FROM parcela_servicio_parcela;
 
 -- UPDATE
 UPDATE mantenimiento_info SET nombre = 'Nuevo nombre', texto = 'Nuevo texto' WHERE id = 0;
@@ -167,6 +198,11 @@ UPDATE historia_imagen SET historia_id = 'Nuevo id', imagen_id = 'Nuevo id' WHER
 UPDATE equiop SET tipo = 'Nuevo tipo', texto = 'Nuevo texto' WHERE id = 0;
 UPDATE equipo_imagen SET historia_id = 'Nuevo id', imagen_id = 'Nuevo id' WHERE id = 0;
 UPDATE pregunta_frecuente SET pregunta = 'Nueva pregunta', respuesta = 'Nueva respuesta' WHERE id = 0;
+UPDATE parcela_tipo SET nombre = 'Nuevo nombre' WHERE id = 0;
+UPDATE parcela_lote SET nombre = 'Nuevo nombre' WHERE id = 0;
+UPDATE parcela_servicio SET nombre = 'Nuevo nombre' WHERE id = 0;
+UPDATE parcela SET nombre = 'Nuevo nombre', parcela_lote_id = 'Nuevo id', parcela_tipo_id = 'Nuevo id', numeracion_interna = 'Nueva numeracion', terreno_ancho = 'Nuevo ancho', terreno_largo = 'Nuevo largo', terreno_despejado_arboles = 'True/False', ubicacion_latitud_gm = 'Nueva lat', ubicacion_longitud_gm = 'Nueva lon', pie = 'Nuevo pie', valor = 'Nuevo valor' WHERE id = 0;
+UPDATE parcela_servicio_parcela SET parcela_id = 'Nuevo id', parcela_servicio_id = 'Nuevo id' WHERE id = 0;
 
 -- DESACTIVATE
 UPDATE mantenimiento_info SET activo = false WHERE id = 0;
@@ -176,6 +212,10 @@ UPDATE imagen SET activo = false WHERE id = 0;
 UPDATE historia SET activo = false WHERE id = 0;
 UPDATE equipo SET activo = false WHERE id = 0;
 UPDATE pregunta_frecuente SET activo = false WHERE id = 0;
+UPDATE parcela_tipo SET activo = false WHERE id = 0;
+UPDATE parcela_lote SET activo = false WHERE id = 0;
+UPDATE parcela_servicio SET activo = false WHERE id = 0;
+UPDATE parcela SET activo = false WHERE id = 0;
 
 
 -- ACTIVATE
@@ -186,6 +226,10 @@ UPDATE imagen SET activo = true WHERE id = 0;
 UPDATE historia SET activo = true WHERE id = 0;
 UPDATE equipo SET activo = true WHERE id = 0;
 UPDATE pregunta_frecuente SET activo = true WHERE id = 0;
+UPDATE parcela_tipo SET activo = true WHERE id = 0;
+UPDATE parcela_lote SET activo = true WHERE id = 0;
+UPDATE parcela_servicio SET activo = true WHERE id = 0;
+UPDATE parcela SET activo = true WHERE id = 0;
 
 -- DELETE
 DELETE FROM mantenimiento_info WHERE id = 0;
@@ -197,3 +241,8 @@ DELETE FROM historia_imagen WHERE id = 0;
 DELETE FROM equipo WHERE id = 0;
 DELETE FROM equipo_imagen WHERE id = 0;
 DELETE FROM pregunta_frecuente WHERE id = 0; 
+DELETE FROM parcela_tipo WHERE id = 0; 
+DELETE FROM parcela_lote WHERE id = 0;
+DELETE FROM parcela_servicio WHERE id = 0;
+DELETE FROM parcela WHERE id = 0;
+DELETE FROM parcela_servicio_parcela WHERE id = 0;

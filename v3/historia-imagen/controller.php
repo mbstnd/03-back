@@ -28,21 +28,21 @@ class Controlador{
         // var_dump($_nuevoObjeto->nombre);
         $id = count($this->getAll()) +1;
         $sql = "INSERT INTO historia_imagen (id, historia_id, imagen_id) VALUES ($id,'$_nuevoObjeto->historia_id','$_nuevoObjeto->imagen_id')";
-        echo $sql;
+        // echo $sql;
         // ejecucion SQL
-        // $rs = [];
-        // try {
-        //     $rs = mysqli_query($con->getConnection(), $sql);
-        // } catch (\Throwable $th) {
-        //     $rs = null;
-        // }
-        // // var_dump($rs);
-        // // cierre de Conexion
-        // $con->closeConnection();
-        // // result set = resultado de la ejecucion de la query
-        // if($rs){
-        //     return true;
-        // }
+        $rs = [];
+        try {
+            $rs = mysqli_query($con->getConnection(), $sql);
+        } catch (\Throwable $th) {
+            $rs = null;
+        }
+        // var_dump($rs);
+        // cierre de Conexion
+        $con->closeConnection();
+        // result set = resultado de la ejecucion de la query
+        if($rs){
+            return true;
+        }
         return null;
     }
 

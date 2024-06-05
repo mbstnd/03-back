@@ -25,26 +25,62 @@ class Controlador{
 
     public function postNuevo($_nuevoObjeto){
         $con = new Conexion();
-        // var_dump($_nuevoObjeto->nombre);
-        $id = count($this->getAll()) +1;
-        $sql = "INSERT INTO pregunta_frecuente (id, pregunta, respuesta, activo) VALUES ($id,'$_nuevoObjeto->pregunta','$_nuevoObjeto->respuesta',true)";
-        // echo $sql;
-        // ejecucion SQL
-        $rs = [];
-        try {
-            $rs = mysqli_query($con->getConnection(), $sql);
-        } catch (\Throwable $th) {
-            $rs = null;
+    
+        // Escapar las variables para evitar la inyección de SQL
+        $pregunta = mysqli_real_escape_string($con->getConnection(), $_nuevoObjeto->pregunta);
+        $respuesta = mysqli_real_escape_string($con->getConnection(), $_nuevoObjeto->respuesta);
+    
+        // Consultar si la pregunta ya existe en la base de datos
+        if ($this->existePregunta($pregunta)) {
+            // La pregunta ya existe, retornar un mensaje de error con código 409
+            return null; // o puedes retornar un mensaje de error más específico
         }
-        // var_dump($rs);
-        // cierre de Conexion
+    
+        // Obtener el próximo ID (preferiblemente usando AUTO_INCREMENT en la base de datos)
+        $id = count($this->getAll()) + 1;
+    
+        // Construir la consulta SQL
+        $sql = "INSERT INTO pregunta_frecuente (id, pregunta, respuesta, activo) VALUES ($id, '$pregunta', '$respuesta', true)";
+    
+        // Ejecutar la consulta SQL
+        $rs = mysqli_query($con->getConnection(), $sql);
+    
+        // Cerrar la conexión
         $con->closeConnection();
-        // result set = resultado de la ejecucion de la query
+    
+        // Verificar si la consulta fue exitosa
         if($rs){
             return true;
+        } else {
+            return null;
         }
-        return null;
     }
+    
+    // Método para verificar si la pregunta ya existe en la base de datos
+    private function existePregunta($pregunta) {
+        $con = new Conexion();
+    
+        // Escapar la pregunta para evitar la inyección de SQL
+        $pregunta = mysqli_real_escape_string($con->getConnection(), $pregunta);
+    
+        // Construir la consulta SQL
+        $sql = "SELECT COUNT(*) AS count FROM pregunta_frecuente WHERE pregunta = '$pregunta'";
+    
+        // Ejecutar la consulta SQL
+        $rs = mysqli_query($con->getConnection(), $sql);
+    
+        // Obtener el resultado de la consulta
+        $fila = mysqli_fetch_assoc($rs);
+        $conteo = $fila['count'];
+    
+        // Si el conteo es mayor que 0, la pregunta ya existe
+        if ($conteo > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 
     public function patchEncenderApagar($_id,$_accion){
         $con = new Conexion();
@@ -67,9 +103,9 @@ class Controlador{
         return null;
     }
 
-    public function putPreguntaById($_nuevo,$_id){
+    public function putPreguntaById($_pregunta,$_id){
         $con = new Conexion();
-        $sql = "UPDATE pregunta_frecuente SET pregunta =  '$_nuevo' WHERE id = $_id";
+        $sql = "UPDATE pregunta_frecuente SET pregunta =  '$_pregunta' WHERE id = $_id";
         // echo $sql;
         // ejecucion SQL
         
@@ -89,9 +125,9 @@ class Controlador{
         return null;
     }
 
-    public function putRespuestaById($_nuevo,$_id){
+    public function putRespuestaById($_respuesta,$_id){
         $con = new Conexion();
-        $sql = "UPDATE pregunta_frecuente SET respuesta =  '$_nuevo' WHERE id = $_id";
+        $sql = "UPDATE pregunta_frecuente SET respuesta =  '$_respuesta' WHERE id = $_id";
         // echo $sql;
         // ejecucion SQL
         

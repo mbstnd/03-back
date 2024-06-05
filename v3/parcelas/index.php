@@ -21,7 +21,7 @@ if (count($_parametros) > 0) {
 }
 
 if ($_version == 'v3') {
-    if ($_mantenedor == 'equipo-imagen') {
+    if ($_mantenedor == 'parcelas') {
         switch ($_metodo) {
             case 'GET':
                 if ($_header == $_token_get){ 
@@ -99,9 +99,27 @@ if ($_version == 'v3') {
                                     $respuesta = $control->putNombreById($body->nombre, $body->id);
 
                                 }
-                                if (strlen($body->texto) >0){
-                                    $respuesta = $control->putTextoById($body->texto, $body->id);
+                                if (strlen($body->terreno_ancho) >0){
+                                    $respuesta = $control->putTerrenoAnchoById($body->terreno_ancho, $body->id);
                                 }
+                                if (strlen($body->terreno_largo) >0){
+                                    $respuesta = $control->putTerrenoLargoById($body->terreno_largo, $body->id);
+                                }
+                                // if (strlen($body->terreno_free) >0){
+                                //     $respuesta = $control->putTerrenoLibreArbolById($body->terreno_free, $body->id);
+                                // }
+                                // if (strlen($body->$_terreno_free) >0){
+                                //     $respuesta = $control->putTerrenoLibreArbolById($body->$_terreno_free, $body->id);
+                                // }
+                                // if (strlen($body->$_ubicacion_latitud) >0){
+                                //     $respuesta = $control->putUbicacionLatitudById($body->$_ubicacion_latitud, $body->id);
+                                // }
+                                // if (strlen($body->$_pie) >0){
+                                //     $respuesta = $control->putPieById($body->$_pie, $body->id);
+                                // }
+                                // if (strlen($body->$_value) >0){
+                                //     $respuesta = $control->putValueById($body->$_value, $body->id);
+                                // }
                                 http_response_code(200);
                                 echo json_encode(["data" => $respuesta]);
                             }else {
