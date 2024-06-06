@@ -69,7 +69,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/PreguntaFrecuenteCreate"
+                                "$ref": "#/components/schemas/CategoriaServicioCreate"
                             }
                         }
                     }
@@ -739,6 +739,34 @@
                         "example": false
                     }
                 }
+            },
+            "CategoriaServicioCreate": {
+                "type": "object",
+                "properties": {
+                    "id" : {
+                        "type" : "int",
+                        "example":" 1"
+                    },
+                    "nombre": {
+                        "type": "string",
+                        "example": "nuevo objeto"
+                    },
+                    "imagen" : {
+                        "type" : "string",
+                        "example": "http://"
+                    },
+                    "texto" : {
+                        "type" : "string",
+                        "example": "descripcion"
+                    },
+                    "activo" : {
+                        "type" : "boolean",
+                        "example" : true
+                    }
+                },
+                "required": [
+                    "nombre"
+                ]
             },
             "CategoriaServicioItem": {
                 "type": "object",
