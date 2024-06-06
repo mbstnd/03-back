@@ -23,9 +23,237 @@
                 "description": "Sitio Web",
                 "url": "http://eva.ciisa.cl"
             }
+        },
+        {
+            "name": "Categoria Servicio",
+            "description": "almacena información sobre las categorías de servicios ofrecidos en nuestro sistema. Cada entrada en esta tabla representa una categoría específica y contiene los siguientes atributos: id, nombre, imagen, texto"
         }
     ],
     "paths": {
+        "/categoria-servicio/": {
+            "get": {
+                "tags": [
+                    "Categoria Servicio"
+                ],
+                "summary": "Obtiene los servicios",
+                "description": "almacena información sobre las categorías de servicios ofrecidos en Terrasol Parcelas. Cada entrada en esta tabla representa una categoría específica y contiene los siguientes atributos:",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa: la lista de servicios han sido recuperados correctamente.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CategoriaServicioResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Sin Autorización"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuthGet": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Categoria Servicio"
+                ],
+                "summary": "Crear una nueva categoria servicio",
+                "description": "Crea una nueva categoria, incluye: nombre, imagen, texto",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PreguntaFrecuenteCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Creación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOk"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Sin Autorización"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuthPost": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Categoria Servicio"
+                ],
+                "summary": "Apagar o Encender una categoria",
+                "description": "Apaga o Enciende una categoria, deja activo en false o true respectivamente.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID del objeto",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "name": "accion",
+                        "in": "query",
+                        "description": "La acción es requerida para la ejecución.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "apagar",
+                                "encender"
+                            ],
+                            "default": "apagar"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cambio exitoso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOk"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Sin Autorización"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuthPatch": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Categoria Servicio"
+                ],
+                "summary": "Modifica los datos de una categoria",
+                "description": "Puede modificar el atributo nombre, imagen, texto",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CategoriaServicioUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Actualización exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOk"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Sin Autorización"
+                    },
+                    "409": {
+                        "description": "Error: Conflicto",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConflictoExiste"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuthPut": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Categoria Servicio"
+                ],
+                "summary": "Eliminar una categoria",
+                "description": "Elimina una categoria, borra de la base de datos.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID del objeto",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Eliminación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOk"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Sin Autorización"
+                    },
+                    "404": {
+                        "description": "Error: No encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConflictoExiste"
+                                }
+                            }
+                        }
+                    },
+                    "405": {
+                        "description": "Error: No implementado"
+                    },
+                    "406": {
+                        "description": "Error: No aceptable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConflictoExiste"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuthDelete": []
+                    }
+                ]
+            }
+        },
         "/pregunta-frecuente/": {
             "get": {
                 "tags": [
@@ -512,6 +740,58 @@
                     }
                 }
             },
+            "CategoriaServicioItem": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "0"
+                    },
+                    "nombre": {
+                        "type": "string",
+                        "example": "nuevo objeto"
+                    },
+                    "imagen": {
+                        "type": "string",
+                        "example": "http://.."
+                    },
+                    "texto": {
+                        "type": "string",
+                        "example": "descripcion"
+                    },
+                    "activo": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                }
+            },
+            "CategoriaServicioUpdate": {
+                "type": "object",
+                "properties": {
+                    "categoria-servicio": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "nombre": {
+                                "type": "string",
+                                "example": "Parcelas"
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "nombre",
+                            "imagen",
+                            "texto"
+                        ]
+                    }
+                },
+                "required": [
+                    "categoria"
+                ]
+            },
             "MantenedorItem": {
                 "type": "object",
                 "properties": {
@@ -584,6 +864,17 @@
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/PreguntaFrecuenteItem"
+                        }
+                    }
+                }
+            },
+            "CategoriaServicioResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CategoriaServicioItem"
                         }
                     }
                 }
