@@ -806,13 +806,23 @@
                             "nombre": {
                                 "type": "string",
                                 "example": "Parcelas"
+                            },
+                            "imagen": {
+                                "type": "string",
+                                "example": "http://.."
+                            },
+                            "texto": {
+                                "type": "string",
+                                "example": "descripcion"
+                            }
+                            ,
+                            "activo": {
+                                "type": "boolean",
+                                "example": "true"
                             }
                         },
                         "required": [
-                            "id",
-                            "nombre",
-                            "imagen",
-                            "texto"
+                            "id"
                         ]
                     }
                 },
