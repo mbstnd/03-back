@@ -31,6 +31,10 @@
         {
             "name": "Informacion Contacto",
             "description": "Informacion de contacto de Terrasol Parcelas"
+        },
+        {
+            "name": "Parcelas",
+            "description": "Informacion de Parcelas"
         }
     ],
     "paths": {
@@ -706,6 +710,220 @@
                 ]
             }
         },
+        "/parcelas/": {
+            "get": {
+                "tags": [
+                    "Parcelas"
+                ],
+                "summary": "Retorna toda la data",
+                "description": "Retorna una lista de objetos, incluye: id, nombre, terreno ancho,terreno largo, terreno despejado de arboles, ubicacion latitud, ubicacion longitud, pie, valor y activo",
+                "responses": {
+                    "200": {
+                        "description": "Respuesta exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ParcelasResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Sin Autorización"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuthGet": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Parcelas"
+                ],
+                "summary": "Crear nuevo objeto",
+                "description": "Crea un objeto básico, incluye: id, nombre, terreno ancho,terreno largo, terreno despejado de arboles, ubicacion latitud, ubicacion longitud, pie, valor y activo",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ParcelasCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Creación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOk"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Error: Conflicto",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConflictoExiste"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Sin Autorización"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuthPost": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Parcelas"
+                ],
+                "summary": "Apagar o Encender un objeto",
+                "description": "Apaga o Enciende un objeto básico, deja activo en false o true respectivamente.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID del objeto",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "name": "accion",
+                        "in": "query",
+                        "description": "La acción es requerida para la ejecución.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "apagar",
+                                "encender"
+                            ],
+                            "default": "apagar"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cambio exitoso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOk"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Sin Autorización"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuthPatch": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Parcelas"
+                ],
+                "summary": "Modifica los datos de un objeto",
+                "description": "Se puede sólo modificar el campo: nombre, terreno ancho, terreno largo, terreno despejados arboles, ubicacion latitud, ubicacion longitud, pie, valor",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ParcelasUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Actualización exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOk"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Sin Autorización"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuthPut": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Parcelas"
+                ],
+                "summary": "Eliminar un objeto",
+                "description": "Elimina un informacion de las Parcelas, lo borra de la base de datos.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID del objeto",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Eliminación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOk"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Sin Autorización"
+                    },
+                    "404": {
+                        "description": "Error: No encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConflictoExiste"
+                                }
+                            }
+                        }
+                    },
+                    "405": {
+                        "description": "Error: No implementado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuthDelete": []
+                    }
+                ]
+            }
+        },
         "/mantenedor/": {
             "get": {
                 "tags": [
@@ -1282,6 +1500,102 @@
                         }
                     }
                 }
+            },
+            "ParcelasCreate": {
+                "type": "object",
+                "properties": {
+                    "nombre": {
+                        "type": "string",
+                        "example": "San Bernando"
+                    },
+                    "terreno-ancho": {
+                        "type": "int",
+                        "example": "500"
+                    },
+                    "terreno-largo": {
+                        "type": "int",
+                        "example": "50"
+                    },
+                    "terreno-despejado-arboles": {
+                        "type": "int",
+                        "example": "1"
+                    },
+                    "ubicacion-latitud": {
+                        "type": "int",
+                        "example": "-33.502028"
+                    },
+                    "ubicacion-longitud": {
+                        "type": "int",
+                        "example": "-73.232966"
+                    },
+                    "pie": {
+                        "type": "int",
+                        "example": "1600000"
+                    },
+                    "valor": {
+                        "type": "int",
+                        "example": "15990000"
+                    }   
+                },
+                "required": [
+                    "nombre"
+                ]
+            },
+            "ParcelasResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ParcelasItem"
+                        }
+                    }
+                }
+            }
+            ,
+            "ParcelasUpdate": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "int",
+                        "example": 4
+                    },
+                    "nombre": {
+                        "type": "string",
+                        "example": "San Bernando"
+                    },
+                    "terreno-ancho": {
+                        "type": "int",
+                        "example": "100"
+                    },
+                    "terreno-largo": {
+                        "type": "int",
+                        "example": "50"
+                    },
+                    "terreno-depejado-arboles": {
+                        "type": "int",
+                        "example": "2"
+                    },
+                    "ubicacion-latitud-gm": {
+                        "type": "int",
+                        "example": "-37.502028"
+                    },
+                    "ubicacion-longitud-gm": {
+                        "type": "int",
+                        "example": "-90.232966"
+                    },
+                    "pie": {
+                        "type": "int",
+                        "example": "132233"
+                    },
+                    "valor": {
+                        "type": "int",
+                        "example": "150003"
+                    }
+                },
+                "required": [
+                    "id"
+                ]
             }
         }
     },
