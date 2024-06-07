@@ -14,11 +14,11 @@ class Conexion {
         $this->server = $_SERVER['HTTP_HOST'];
         $this->connection = null;
         $this->port = 3306;
-        $this->db = "ciisa_backend_v3_eva2_A";
+        $this->db = "ciisa_backend_v3_eva3_mbstnd";
         $this->host = "localhost";
 
         if ($this->server == 'localhost') {
-            $this->username = 'ciisa_backend_v3_eva2_A';
+            $this->username = 'ciisa_backend_v3_eva3_mbstnd';
             $this->password = 'l4cl4v3-c11s4';
         }
     }
