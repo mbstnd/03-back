@@ -21,20 +21,16 @@
             "description": "Almacena información sobre las categorías de servicios ofrecidos en nuestro sistema. Cada entrada en esta tabla representa una categoría específica y contiene los siguientes atributos: id, nombre, imagen, texto"
         },
         {
-            "name": "Mantenedor",
-            "description": "Esquema básico",
-            "externalDocs": {
-                "description": "Sitio Web",
-                "url": "http://eva.ciisa.cl"
-            }
-        },
-        {
             "name": "Informacion Contacto",
-            "description": "Informacion de contacto de Terrasol Parcelas"
+            "description": "Gestión de la información de contacto para Terrasol Parcelas, incluyendo detalles principales y adicionales de contacto, así como el estado de actividad de cada entrada."
         },
         {
             "name": "Parcelas",
-            "description": "Informacion de Parcelas"
+            "description": "Administración y detalle de las parcelas, incluyendo información específica y relevante para cada una de las propiedades gestionadas."
+        },
+        {
+            "name": "Historia",
+            "description": "Registro cronologico de las parcelas, detallando eventos, cambios y desarrollos significativos relacionados con cada propiedad."
         }
     ],
     "paths": {
@@ -44,7 +40,7 @@
                     "Categoria Servicio"
                 ],
                 "summary": "Obtiene los servicios",
-                "description": "almacena información sobre las categorías de servicios ofrecidos en Terrasol Parcelas. Cada entrada en esta tabla representa una categoría específica y contiene los siguientes atributos:",
+                "description": "Almacena información sobre las categorías de servicios ofrecidos en Terrasol Parcelas. Cada entrada en esta tabla representa una categoría específica y contiene los siguientes atributos:",
                 "responses": {
                     "200": {
                         "description": "Operación exitosa: la lista de servicios han sido recuperados correctamente.",
@@ -267,8 +263,8 @@
                 "tags": [
                     "Preguntas Frecuentes"
                 ],
-                "summary": "Obtiene todas las preguntas frecuentes.",
-                "description": "Devuelve una lista completa de preguntas frecuentes, que incluye los campos: ID, pregunta, respuesta y estado activo.",
+                "summary": "Obtener todas las preguntas frecuentes",
+                "description": "Devuelve una lista completa de preguntas frecuentes, incluyendo los campos: ID, pregunta, respuesta y estado de activo.",
                 "responses": {
                     "200": {
                         "description": "Operación exitosa: la lista de preguntas frecuentes ha sido recuperada correctamente.",
@@ -294,8 +290,8 @@
                 "tags": [
                     "Preguntas Frecuentes"
                 ],
-                "summary": "Crear una nueva pregunta frecuente",
-                "description": "Crea una pregunta frecuente, incluye: pregunta y respuesta",
+                "summary": "Crear nueva pregunta frecuente",
+                "description": "Crea una nueva pregunta frecuente con los campos requeridos de pregunta y respuesta.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -331,8 +327,8 @@
                 "tags": [
                     "Preguntas Frecuentes"
                 ],
-                "summary": "Apagar o Encender una pregunta frecuente",
-                "description": "Apaga o Enciende una pregunta frecuente, deja activo en false o true respectivamente.",
+                "summary": "Actualizar estado de pregunta frecuente",
+                "description": "Actualiza el estado de una pregunta frecuente existente, permitiendo apagarla (activo: false) o encenderla (activo: true) según sea necesario.",
                 "parameters": [
                     {
                         "name": "id",
@@ -382,8 +378,8 @@
                 "tags": [
                     "Preguntas Frecuentes"
                 ],
-                "summary": "Modifica los datos de una pregunta frecuente",
-                "description": "Puede modificar el atributo `pregunta` y/o `respuesta`. Pueden ser juntos o separados.",
+                "summary": "Actualizar pregunta frecuente",
+                "description": "Actualiza los datos de una pregunta frecuente existente, permitiendo modificar el atributo 'pregunta' y/o 'respuesta'. Estos cambios pueden realizarse juntos o por separado.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -429,8 +425,8 @@
                 "tags": [
                     "Preguntas Frecuentes"
                 ],
-                "summary": "Eliminar una pregunta frecuente",
-                "description": "Elimina una pregunta frecuente, borra de la base de datos.",
+                "summary": "Eliminar pregunta frecuente",
+                "description": "Elimina una pregunta frecuente de la base de datos.",
                 "parameters": [
                     {
                         "name": "id",
@@ -491,8 +487,8 @@
                 "tags": [
                     "Informacion Contacto"
                 ],
-                "summary": "Obtiene toda la informacion de contacto de Terrasol Parcelas",
-                "description": "Devuelve una lista completa de informacion para contactar con Terrasol Parcelas, incluye los campos: ID, pregunta, nombre, texto, texto adicional y estado activo.",
+                "summary": "Obtener información de contacto de Terrasol Parcelas",
+                "description": "Devuelve una lista completa de información de contacto para Terrasol Parcelas, incluyendo los campos: ID, nombre, texto de contacto principal, texto adicional de contacto y estado de activación.",
                 "responses": {
                     "200": {
                         "description": "Operación exitosa: la lista de preguntas frecuentes ha sido recuperada correctamente.",
@@ -518,8 +514,8 @@
                 "tags": [
                     "Informacion Contacto"
                 ],
-                "summary": "Crear una nueva informacion de contacto",
-                "description": "Crea una informacion de contacto, incluye: nombre, texto y texto adicional ",
+                "summary": "Registrar nuevo contacto",
+                "description": "Registra un nuevo contacto para Terrasol Parcelas, incluyendo campos como nombre, texto de contacto principal y texto adicional de contacto.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -555,8 +551,8 @@
                 "tags": [
                     "Informacion Contacto"
                 ],
-                "summary": "Apagar o Encender una informacion de contacto",
-                "description": "Apaga o Enciende una informacion de contacto, deja activo en false o true respectivamente.",
+                "summary": "Actualizar estado de información de contacto",
+                "description": "Actualiza el estado de una información de contacto existente, permitiendo apagarla (activo: false) o encenderla (activo: true) según sea necesario.",
                 "parameters": [
                     {
                         "name": "id",
@@ -606,8 +602,8 @@
                 "tags": [
                     "Informacion Contacto"
                 ],
-                "summary": "Modifica los datos de una informacion de contacto",
-                "description": "Puede modificar el atributo nombre, texto y texto adicional. Pueden ser juntos o separados.",
+                "summary": "Actualizar información de contacto",
+                "description": "Actualiza los detalles de una información de contacto existente, permitiendo modificar los campos de nombre, texto y texto adicional. Pueden ser modificados juntos o por separado.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -653,8 +649,8 @@
                 "tags": [
                     "Informacion Contacto"
                 ],
-                "summary": "Eliminar una informacion de contacto",
-                "description": "Elimina una informacion de contacto, borra de la base de datos.",
+                "summary": "Eliminar información de contacto",
+                "description": "Elimina una entrada de información de contacto de la base de datos.",
                 "parameters": [
                     {
                         "name": "id",
@@ -715,8 +711,8 @@
                 "tags": [
                     "Parcelas"
                 ],
-                "summary": "Retorna toda la data",
-                "description": "Retorna una lista de objetos, incluye: id, nombre, terreno ancho,terreno largo, terreno despejado de arboles, ubicacion latitud, ubicacion longitud, pie, valor y activo",
+                "summary": "Obtiene toda la información de las parcelas de Terrasol Parcelas",
+                "description": "Devuelve una lista completa de información sobre las parcelas de Terrasol Parcelas, incluyendo los campos: ID, nombre, ubicación, tamaño, descripción y estado actual.",
                 "responses": {
                     "200": {
                         "description": "Respuesta exitosa",
@@ -742,8 +738,8 @@
                 "tags": [
                     "Parcelas"
                 ],
-                "summary": "Crear nuevo objeto",
-                "description": "Crea un objeto básico, incluye: id, nombre, terreno ancho,terreno largo, terreno despejado de arboles, ubicacion latitud, ubicacion longitud, pie, valor y activo",
+                "summary": "Crear nueva parcela",
+                "description": "Crea una nueva parcela con los siguientes campos: id, nombre, terreno ancho, terreno largo, terreno despejado de árboles, ubicación (latitud y longitud), pie, valor y estado activo",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -789,8 +785,8 @@
                 "tags": [
                     "Parcelas"
                 ],
-                "summary": "Apagar o Encender un objeto",
-                "description": "Apaga o Enciende un objeto básico, deja activo en false o true respectivamente.",
+                "summary": "Actualizar el estado activo de una Parcela",
+                "description": "Actualiza el estado activo de una parcela existente, permitiendo encender o apagar (activar o desactivar) la parcela.",
                 "parameters": [
                     {
                         "name": "id",
@@ -840,8 +836,8 @@
                 "tags": [
                     "Parcelas"
                 ],
-                "summary": "Modifica los datos de un objeto",
-                "description": "Se puede sólo modificar el campo: nombre, terreno ancho, terreno largo, terreno despejados arboles, ubicacion latitud, ubicacion longitud, pie, valor",
+                "summary": "Actualizar detalles de una parcela",
+                "description": "Actualiza los detalles específicos de una parcela existente, permitiendo modificar campos como: nombre, ancho del terreno, largo del terreno, estado de limpieza de árboles, ubicación (latitud y longitud), dimensiones en pies, valor.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -877,8 +873,8 @@
                 "tags": [
                     "Parcelas"
                 ],
-                "summary": "Eliminar un objeto",
-                "description": "Elimina un informacion de las Parcelas, lo borra de la base de datos.",
+                "summary": "Eliminar una parcela",
+                "description": "Elimina una parcela de la base de datos, borrando su información de manera permanente.",
                 "parameters": [
                     {
                         "name": "id",
@@ -923,21 +919,22 @@
                     }
                 ]
             }
-        },
-        "/mantenedor/": {
+        }
+        ,
+        "/historia/": {
             "get": {
                 "tags": [
-                    "Mantenedor"
+                    "Historia"
                 ],
-                "summary": "Retorna todos los objetos",
-                "description": "Retorna una lista de objetos del tipo básico, incluye: id, nombre y activo",
+                "summary": "Obtener historial completo",
+                "description": "Obtiene el historial completo de Terrasol Parcelas, incluyendo registros detallados de eventos, cambios y desarrollos relevantes a lo largo del tiempo.",
                 "responses": {
                     "200": {
                         "description": "Respuesta exitosa",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/MantenedorResponse"
+                                    "$ref": "#/components/schemas/HistoriaResponse"
                                 }
                             }
                         }
@@ -954,16 +951,16 @@
             },
             "post": {
                 "tags": [
-                    "Mantenedor"
+                    "Historia"
                 ],
-                "summary": "Crear nuevo objeto",
-                "description": "Crea un objeto básico, incluye: id, nombre y activo",
+                "summary": "Registrar nuevo evento histórico",
+                "description": "Registra un nuevo evento histórico en el historial de Terrasol Parcelas, incluyendo detalles como el tipo de evento, texto descriptivo y estado activo.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/MantenedorCreate"
+                                "$ref": "#/components/schemas/HistoriaCreate"
                             }
                         }
                     }
@@ -1001,10 +998,10 @@
             },
             "patch": {
                 "tags": [
-                    "Mantenedor"
+                    "Historia"
                 ],
-                "summary": "Apagar o Encender un objeto",
-                "description": "Apaga o Enciende un objeto básico, deja activo en false o true respectivamente.",
+                "summary": "Actualizar estado de evento histórico",
+                "description": "Actualiza el estado de un evento histórico existente, permitiendo apagarlo (activo: false) o encenderlo (activo: true) según sea necesario.",
                 "parameters": [
                     {
                         "name": "id",
@@ -1052,16 +1049,16 @@
             },
             "put": {
                 "tags": [
-                    "Mantenedor"
+                    "Historia"
                 ],
-                "summary": "Modifica los datos de un objeto",
-                "description": "Se puede sólo modificar el campo `nombre`",
+                "summary": "Actualizar detalles de evento histórico",
+                "description": "Actualiza los detalles específicos de un evento histórico existente, permitiendo modificar los campos de tipo y texto según sea necesario.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/MantenedorUpdate"
+                                "$ref": "#/components/schemas/HistoriaUpdate"
                             }
                         }
                     }
@@ -1089,10 +1086,10 @@
             },
             "delete": {
                 "tags": [
-                    "Mantenedor"
+                    "Historia"
                 ],
-                "summary": "Eliminar un objeto",
-                "description": "Elimina un objeto básico, lo borra de la base de datos.",
+                "summary": "Eliminar evento histórico",
+                "description": "Elimina un evento histórico del historial de Terrasol Parcelas, borrando su información de la base de datos de manera permanente.",
                 "parameters": [
                     {
                         "name": "id",
@@ -1274,71 +1271,6 @@
                 },
                 "required": [
                     "categoria"
-                ]
-            },
-            "MantenedorItem": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string",
-                        "example": "0"
-                    },
-                    "nombre": {
-                        "type": "string",
-                        "example": "nuevo objeto"
-                    },
-                    "activo": {
-                        "type": "boolean",
-                        "example": true
-                    }
-                }
-            },
-            "MantenedorUpdate": {
-                "type": "object",
-                "properties": {
-                    "mantenedor": {
-                        "type": "object",
-                        "properties": {
-                            "id": {
-                                "type": "integer",
-                                "example": 13
-                            },
-                            "nombre": {
-                                "type": "string",
-                                "example": "Desarrollo Backend"
-                            }
-                        },
-                        "required": [
-                            "id",
-                            "nombre"
-                        ]
-                    }
-                },
-                "required": [
-                    "mantenedor"
-                ]
-            },
-            "MantenedorResponse": {
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/MantenedorItem"
-                        }
-                    }
-                }
-            },
-            "MantenedorCreate": {
-                "type": "object",
-                "properties": {
-                    "nombre": {
-                        "type": "string",
-                        "example": "nuevo objeto"
-                    }
-                },
-                "required": [
-                    "nombre"
                 ]
             },
             "PreguntaFrecuenteResponse": {
@@ -1551,8 +1483,7 @@
                         }
                     }
                 }
-            }
-            ,
+            },
             "ParcelasUpdate": {
                 "type": "object",
                 "properties": {
@@ -1591,6 +1522,79 @@
                     "valor": {
                         "type": "int",
                         "example": "150003"
+                    }
+                },
+                "required": [
+                    "id"
+                ]
+            },
+            "HistoriaResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/HistoriaItem"
+                        }
+                    }
+                }
+            },
+            "HistoriaItem": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "int",
+                        "example": 0
+                    },
+                    "tipo": {
+                        "type": "string",
+                        "example": "Titulo"
+                    },
+                    "texto": {
+                        "type": "string",
+                        "example": "Terrasol Parcelas no solo ofrece tierras, sino tambien una tranquildad en el hogar"
+                    },
+                    "activo": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                }
+            },
+            "HistoriaCreate": {
+                "type": "object",
+                "properties": {
+                    "tipo": {
+                        "type": "string",
+                        "example": "Titulo"
+                    },
+                    "texto": {
+                        "type": "int",
+                        "example": "Inicios"
+                    },
+                    "activo": {
+                        "type": "boolean",
+                        "example": "true"
+                    }   
+                },
+                "required": [
+                    "tipo",
+                    "texto"
+                ]
+            },
+            "HistoriaUpdate": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "int",
+                        "example": 1
+                    },
+                    "tipo": {
+                        "type": "string",
+                        "example": "Titulo"
+                    },
+                    "texto": {
+                        "type": "int",
+                        "example": "Inicios"
                     }
                 },
                 "required": [

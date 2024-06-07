@@ -104,30 +104,40 @@ if ($_version == 'v3') {
                                 echo json_encode(["Error" => "No tiene autorizacion PUT"]);
                             }
                             break;
-                    case 'DELETE':
-                        if($_header == $_token_delete){
-                                include_once 'controller.php';
-                                include_once '../conexion.php';
-                                $control = new Controlador();
-                                if($existeId){
-                                    $respuesta = $control->deleteById($valorId);
-                                    http_response_code(200);
-                                    echo json_encode(["data" => $respuesta]);
-                                }else {
-                                    http_response_code(400);
-                                    echo json_encode(["Error" => "Los parámetros proporcionados no son los requeridos. Por favor, revise la documentación y envíe los parámetros correctos."]);
+                            case 'DELETE':
+                                if ($_header == $_token_delete) {
+                                    include_once 'controller.php';
+                                    include_once '../conexion.php';
+                                    $control = new Controlador();
+                                    if ($existeId) {
+                                        $listado = $control->getAll();
+                                        $existeRegistro = false;
+                                        foreach ($listado as $item) {
+                                            if ($item['id'] == $valorId) {
+                                                $existeRegistro = true;
+                                            }
+                                        }
+                                        if (!$existeRegistro) {
+                                            http_response_code(404);
+                                            echo json_encode(["data" => false]);
+                                        } else {
+                                            $respuesta = $control->deleteById($valorId);
+                                            http_response_code(200);
+                                            echo json_encode(["data" => $respuesta]);
+                                        }
+                                    } else {
+                                        http_response_code(406);
+                                        echo json_encode(["data" => false]);
+                                    }
+                                } else {
+                                    http_response_code(401);
+                                    echo json_encode(["Error" => "No tiene autorizacion DELETE"]);
                                 }
-
-                        }else{
-                            http_response_code(401);
-                            echo json_encode(["Error" => "No tiene autorizacion DELETE"]);
-
-                        }
-                            break;        
-            default:
-                http_response_code(405);
-                echo json_encode(["Error" => "No implementado"]);
-                break;
+                                break;
+                            default:
+                                http_response_code(405);
+                                echo json_encode(["Error" => "No implementado"]);
+                                break;
         }
     }
 }
