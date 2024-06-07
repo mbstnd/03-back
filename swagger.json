@@ -17,6 +17,10 @@
             "description": "Contiene las preguntas más comunes formuladas por los clientes, junto con respuestas estandarizadas para facilitar la atención y resolución rápida de consultas."
         },
         {
+            "name": "Categoria Servicio",
+            "description": "Almacena información sobre las categorías de servicios ofrecidos en nuestro sistema. Cada entrada en esta tabla representa una categoría específica y contiene los siguientes atributos: id, nombre, imagen, texto"
+        },
+        {
             "name": "Mantenedor",
             "description": "Esquema básico",
             "externalDocs": {
@@ -25,8 +29,8 @@
             }
         },
         {
-            "name": "Categoria Servicio",
-            "description": "almacena información sobre las categorías de servicios ofrecidos en nuestro sistema. Cada entrada en esta tabla representa una categoría específica y contiene los siguientes atributos: id, nombre, imagen, texto"
+            "name": "Informacion Contacto",
+            "description": "Informacion de contacto de Terrasol Parcelas"
         }
     ],
     "paths": {
@@ -423,6 +427,230 @@
                 ],
                 "summary": "Eliminar una pregunta frecuente",
                 "description": "Elimina una pregunta frecuente, borra de la base de datos.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID del objeto",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Eliminación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOk"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Sin Autorización"
+                    },
+                    "404": {
+                        "description": "Error: No encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConflictoExiste"
+                                }
+                            }
+                        }
+                    },
+                    "405": {
+                        "description": "Error: No implementado"
+                    },
+                    "406": {
+                        "description": "Error: No aceptable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConflictoExiste"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuthDelete": []
+                    }
+                ]
+            }
+        },
+        "/info-contacto/": {
+            "get": {
+                "tags": [
+                    "Informacion Contacto"
+                ],
+                "summary": "Obtiene toda la informacion de contacto de Terrasol Parcelas",
+                "description": "Devuelve una lista completa de informacion para contactar con Terrasol Parcelas, incluye los campos: ID, pregunta, nombre, texto, texto adicional y estado activo.",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa: la lista de preguntas frecuentes ha sido recuperada correctamente.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InformacionContactoResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Sin Autorización"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuthGet": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Informacion Contacto"
+                ],
+                "summary": "Crear una nueva informacion de contacto",
+                "description": "Crea una informacion de contacto, incluye: nombre, texto y texto adicional ",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InformacionContactoCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Creación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOk"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Sin Autorización"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuthPost": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Informacion Contacto"
+                ],
+                "summary": "Apagar o Encender una informacion de contacto",
+                "description": "Apaga o Enciende una informacion de contacto, deja activo en false o true respectivamente.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID del objeto",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "name": "accion",
+                        "in": "query",
+                        "description": "La acción es requerida para la ejecución.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "apagar",
+                                "encender"
+                            ],
+                            "default": "apagar"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cambio exitoso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOk"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Sin Autorización"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuthPatch": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Informacion Contacto"
+                ],
+                "summary": "Modifica los datos de una informacion de contacto",
+                "description": "Puede modificar el atributo nombre, texto y texto adicional. Pueden ser juntos o separados.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InformacionContactoUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Actualización exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOk"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Sin Autorización"
+                    },
+                    "409": {
+                        "description": "Error: Conflicto",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConflictoExiste"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuthPut": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Informacion Contacto"
+                ],
+                "summary": "Eliminar una informacion de contacto",
+                "description": "Elimina una informacion de contacto, borra de la base de datos.",
                 "parameters": [
                     {
                         "name": "id",
@@ -973,6 +1201,87 @@
                 "required": [
                     "id"
                 ]
+            },
+            "InformacionContactoUpdate": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "int",
+                        "example": 1
+                    },
+                    "nombre": {
+                        "type": "string",
+                        "example": "Twitter"
+                    },
+                    "texto": {
+                        "type": "string",
+                        "example": "Tu parcela en el sur de Chile."
+                    },
+                    "texto-adicional": {
+                        "type": "string",
+                        "example": "http://..."
+                    }
+                },
+                "required": [
+                    "id"
+                ]
+            },
+            "InformacionContactoCreate": {
+                "type": "object",
+                "properties": {
+                    "nombre": {
+                        "type": "string",
+                        "example": "Twitter"
+                    },
+                    "texto": {
+                        "type": "string",
+                        "example": "Tu parcela en el sur de Chile."
+                    },
+                    "texto-adicional": {
+                        "type": "string",
+                        "example": "http://..."
+                    }
+                    
+                },
+                "required": [
+                    "nombre"
+                ]
+            },
+            "InformacionContactoItem": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "int",
+                        "example": 0
+                    },
+                    "nombre": {
+                        "type": "string",
+                        "example": "Twitter"
+                    },
+                    "texto": {
+                        "type": "string",
+                        "example": "Tu parcela en el sur de Chile."
+                    },
+                    "texto_adicional": {
+                        "type": "string",
+                        "example": "http://..."
+                    },
+                    "activo": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                }
+            },
+            "InformacionContactoResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/InformacionContactoItem"
+                        }
+                    }
+                }
             }
         }
     },
